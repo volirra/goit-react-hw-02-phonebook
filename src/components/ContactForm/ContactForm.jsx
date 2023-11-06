@@ -1,35 +1,26 @@
-import { Formik, Field, Form } from 'formik';
+import React from 'react';
+import { Formik } from 'formik';
+import * as yup from 'yup';
+import { nanoid } from 'nanoid';
+import PropTypes from 'prop-types';
+import { Form, FormField, FieldFormik, ErrorMessage } from './ContactForm.styled';
 
-const Basic = () => (
-  <div>
-    <h1>Sign Up</h1>
-    <Formik
-      initialValues={{
-        firstName: '',
-        lastName: '',
-        email: '',
-      }}
-      onSubmit={async values => {
-        await new Promise(r => setTimeout(r, 500));
-        alert(JSON.stringify(values, null, 2));
-      }}
-    >
-      <Form>
-        <label htmlFor="firstName">First Name</label>
-        <Field id="firstName" name="firstName" placeholder="Jane" />
+const SignupSchema = Yup.object().shape({
+  firstName: Yup.string()
 
-        <label htmlFor="lastName">Last Name</label>
-        <Field id="lastName" name="lastName" placeholder="Doe" />
+    .min(2, 'Too Short!')
 
-        <label htmlFor="email">Email</label>
-        <Field
-          id="email"
-          name="email"
-          placeholder="jane@acme.com"
-          type="email"
-        />
-        <button type="submit">Submit</button>
-      </Form>
-    </Formik>
-  </div>
-);
+    .max(50, 'Too Long!')
+
+    .required('Required'),
+
+  lastName: Yup.string()
+
+    .min(2, 'Too Short!')
+
+    .max(50, 'Too Long!')
+
+    .required('Required'),
+
+  email: Yup.string().email('Invalid email').required('Required'),
+});
