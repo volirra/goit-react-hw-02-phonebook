@@ -1,20 +1,21 @@
 import React from 'react';
-import { Input, LabelDescr } from './Filter.styled';
-import { LabelWrapper } from 'components/ContactForm/ContactForm.styled';
 import PropTypes from 'prop-types';
+import { Div, Label, Input } from './Filter.style';
 
-const Filter = ({ value, onChange }) => (
-  <LabelDescr>
-    <LabelWrapper>
-      <BsSearch size="16" /> Find contacts by name
-    </LabelWrapper>
-    <Input type="text" value={value} onChange={onChange} placeholder="search" />
-  </LabelDescr>
-);
-
-export default Filter;
+function Filter({ value, onChangeFilter }) {
+  return (
+    <Div>
+      <Label>
+        Find contacts by name
+        <Input type="text" value={value} onChange={onChangeFilter} />
+      </Label>
+    </Div>
+  );
+}
 
 Filter.propTypes = {
-  onChange: PropTypes.func.isRequired,
   value: PropTypes.string.isRequired,
+  onChangeFilter: PropTypes.func.isRequired,
 };
+
+export default Filter;

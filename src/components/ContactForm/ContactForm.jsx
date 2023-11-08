@@ -1,26 +1,66 @@
 import React from 'react';
-import { Formik } from 'formik';
-import * as yup from 'yup';
 import { nanoid } from 'nanoid';
-import PropTypes from 'prop-types';
-import { Form, FormField, FieldFormik, ErrorMessage } from './ContactForm.styled';
+import { Form, Label, Button, Input } from './ContactForm.Style';
 
-const SignupSchema = Yup.object().shape({
-  firstName: Yup.string()
+class ContactForm extends React.Component {
+  state = {
+    name: '',
+    number: '',
+  };
 
-    .min(2, 'Too Short!')
+  nameInputId = nanoid();
+  numberInputId = nanoid();
 
-    .max(50, 'Too Long!')
+  handleSubmit = event => {
+    event.preventDefault();
 
-    .required('Required'),
+    this.props.onSubmit({ name: this.state.name, number: this.state.number });
 
-  lastName: Yup.string()
+    this.reset();
+  };
 
-    .min(2, 'Too Short!')
+  handleChange = event => {
+    const { name, value } = event.target;
+    this.setState({ [name]: value });
+  };
 
-    .max(50, 'Too Long!')
+  reset = () => {
+    this.setState({ number: '', name: '' });
+  };
 
-    .required('Required'),
+  render() {
+    return (
+      <Form onSubmit={this.handleSubmit}>
+        <Label htmlFor={this.nameInputId}>
+          Name
+          <Input
+            type="text"
+            name="name"
+            value={this.state.name}
+            onChange={this.handleChange}
+            pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+            title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+            required
+          />
+        </Label>
 
-  email: Yup.string().email('Invalid email').required('Required'),
-});
+        <Label htmlFor={this.numberInputId}>
+          Number
+          <Input
+            type="tel"
+            name="number"
+            value={this.state.number}
+            onChange={this.handleChange}
+            pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+            title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+            required
+          />
+        </Label>
+
+        <Button type="submit">Add contact </Button>
+      </Form>
+    );
+  }
+}
+
+export default ContactForm;

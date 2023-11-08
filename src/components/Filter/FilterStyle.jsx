@@ -1,7 +1,18 @@
 import styled from 'styled-components';
 
-export const LabelDescr = styled.label`
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+export const Div = styled.div`
+  margin-bottom: 15px;
+`;
+
+export const Label = styled.label`
+  color: #000;
+  font-size: 20px;
+`;
+
+export const Input = styled.input`
+  width: 500px;
+  padding: 10px;
+  margin: 0 auto;
+  border-radius: 4px;
+  border: 3px solid #cbf080;
 `;
