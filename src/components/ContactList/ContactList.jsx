@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { List, Item, Button } from './ContactList.Style';
+import { List, Item, Button } from './ContactList.styled';
 
 
 const ContactList = ({ contacts, onRemoveContact }) => (
